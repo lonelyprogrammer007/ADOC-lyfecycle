@@ -9,7 +9,7 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
-  SimpleChanges
+  SimpleChanges,
 } from '@angular/core';
 
 import { LoggerService } from './logger.service';
@@ -17,21 +17,28 @@ import { PeekABooDirective } from './peek-a-boo.directive';
 
 @Component({
   selector: 'peek-a-boo',
-  template: '<p>Now you see my hero, {{name}}</p>'
+  template: '<p>Now you see my hero, {{name}}</p>',
 })
 // Don't HAVE to mention the Lifecycle Hook interfaces
 // unless we want typing and tool support.
-export class PeekABooComponent extends PeekABooDirective implements
-             OnChanges, OnInit, DoCheck,
-             AfterContentInit, AfterContentChecked,
-             AfterViewInit, AfterViewChecked,
-             OnDestroy {
+export class PeekABooComponent
+  extends PeekABooDirective
+  implements
+    OnChanges,
+    OnInit,
+    DoCheck,
+    AfterContentInit,
+    AfterContentChecked,
+    AfterViewInit,
+    AfterViewChecked,
+    OnDestroy
+{
   @Input() name = '';
 
   private verb = 'initialized';
 
-  constructor(logger: LoggerService) {
-    super(logger);
+  constructor(private loggerService: LoggerService) {
+    super(loggerService);
 
     const is = this.name ? 'is' : 'is not';
     this.logIt(`name ${is} known at construction`);
@@ -54,23 +61,34 @@ export class PeekABooComponent extends PeekABooDirective implements
 
   // Beware! Called frequently!
   // Called in every change detection cycle anywhere on the page
-  ngDoCheck() { this.logIt('DoCheck'); }
+  ngDoCheck() {
+    this.logIt('DoCheck');
+  }
 
-  ngAfterContentInit() { this.logIt('AfterContentInit');  }
-
-  // Beware! Called frequently!
-  // Called in every change detection cycle anywhere on the page
-  ngAfterContentChecked() { this.logIt('AfterContentChecked'); }
-
-  ngAfterViewInit() { this.logIt('AfterViewInit'); }
+  ngAfterContentInit() {
+    this.logIt('AfterContentInit');
+  }
 
   // Beware! Called frequently!
   // Called in every change detection cycle anywhere on the page
-  ngAfterViewChecked() { this.logIt('AfterViewChecked'); }
+  ngAfterContentChecked() {
+    this.logIt('AfterContentChecked');
+  }
 
-  ngOnDestroy() { this.logIt('OnDestroy'); }
+  ngAfterViewInit() {
+    this.logIt('AfterViewInit');
+  }
+
+  // Beware! Called frequently!
+  // Called in every change detection cycle anywhere on the page
+  ngAfterViewChecked() {
+    this.logIt('AfterViewChecked');
+  }
+
+  ngOnDestroy() {
+    this.logIt('OnDestroy');
+  }
 }
-
 
 /*
 Copyright Google LLC. All Rights Reserved.

@@ -22,19 +22,16 @@ import { LoggerService } from './logger.service';
     </div>
   </div>
   `,
-  providers:  [ LoggerService ]
+  // providers: [LoggerService],
 })
 export class PeekABooParentComponent {
-
   hasChild = false;
   hookLog: string[] = [];
 
-  heroName = 'Windstorm';
-  private logger: LoggerService;
+  heroName = '';
 
-  constructor(logger: LoggerService) {
-    this.logger = logger;
-    this.hookLog = logger.logs;
+  constructor(private logger: LoggerService) {
+    this.hookLog = this.logger.logs;
   }
 
   toggleChild() {
@@ -44,7 +41,7 @@ export class PeekABooParentComponent {
       this.logger.clear(); // clear log on create
     }
     this.hookLog = this.logger.logs;
-    this.logger.tick();
+    // this.logger.tick();
   }
 
   updateHero() {
@@ -52,7 +49,6 @@ export class PeekABooParentComponent {
     this.logger.tick();
   }
 }
-
 
 /*
 Copyright Google LLC. All Rights Reserved.
